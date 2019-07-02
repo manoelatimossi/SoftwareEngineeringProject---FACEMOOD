@@ -15,14 +15,14 @@ largura, altura = 220, 220
 while(camera.isOpened()):
     conectado, imagem = camera.read()
 
-    #imagemCinza = cv2.cvtColor(imagem, cv2.COLOR_BAYER_BG2BGR_EA) não sei se vai funcionar
-    imagemCinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2RGB) #changes picture color to Black Grey Red
+
+    imagemCinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY) #changes picture color to Black Grey Red
 
     facesDetectadas = classificador.detectMultiScale(imagem, scaleFactor=1.5, minSize=(100,100))
 
     for(x, y, l, a) in facesDetectadas:
 
-        cv2.rectangle(imagem, (x, y), (x+l, y+a ),(0,0,255), 2) #face detection triangle
+        cv2.rectangle(imagem, (x, y), (x+l, y+a ),(0,0,255), 2) #face detection
         region = imagem[y:y+a, x:x+l]
         greyregion = cv2.cvtColor(region, cv2.COLOR_BGR2RGB)
         eyedetect = eyesClassifier.detectMultiScale(greyregion) #eye classifier
@@ -30,7 +30,7 @@ while(camera.isOpened()):
             cv2.rectangle(region,(ex, ey), (ex + el, ey + ea), (0, 255, 0), 2 )
 
             if cv2.waitKey(1) & 0xFF == ord(']'):
-                if np.average(imagemCinza) > 110: #iluminação
+                if np.average(imagemCinza) > 110: #ilumination
 
                     FaceImage = cv2.resize(imagemCinza [y:y + a, x:x + l], (largura, altura))
                     cv2.imwrite("fotos/pessoa."+ str(id) + "." +str(amostra) + ".jpg", FaceImage)
