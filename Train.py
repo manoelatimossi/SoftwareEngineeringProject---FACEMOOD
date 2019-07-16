@@ -3,9 +3,11 @@ import os
 import numpy as np
 
 #Trainers
-eigentrain = cv2.face.EigenFaceRecognizer_create()
+eigentrain = cv2.face.EigenFaceRecognizer_create(num_components=8) #phantom pictures
 fishertrain = cv2.face.FisherFaceRecognizer_create()
 lbphtrain = cv2.face.LBPHFaceRecognizer_create()
+
+
 
 def getImageId(): #runs through the photos fold and search for the ID
     paths=[os.path.join('fotos', f)for f in os.listdir('fotos')]
@@ -28,10 +30,10 @@ eigentrain.train(faces, ids) #supervised trainning
 eigentrain.write('ClassifierEigen.yml')
 
 fishertrain.train(faces,ids)
-fishertrain.write('ClassifierFisher.yml')
+fishertrain.write('ClassifierFisher.yml') #supervised trainning
 
 lbphtrain.train(faces,ids)
-lbphtrain.write('Classifierlbph.yml')
+lbphtrain.write('Classifierlbph.yml') #supervised trainning
 
 print("Trainning was sucessful")
 
